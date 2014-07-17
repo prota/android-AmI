@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -26,19 +27,22 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener, OnClickListener {
 	
 	
 	/*main Activity vars*/
 	OnClickListener listener1 = null;
-	OnClickListener listener2 = null;		
+	OnClickListener listener2 = null;	
+	OnClickListener listener3 = null;
+	
 	TextView tvIsConnected;
 	static Button button2;
+	static Button button3;
 	static TextView tview;
 		 
 	/* voice vars */
@@ -95,7 +99,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		        actionsLights(true);
 		      }
 		    };
+		    
+		    listener3 = new OnClickListener() {
+			      public void onClick(View v) {		        
+			        
+			        Toast.makeText(getApplicationContext(),"Calling Ami API...", Toast.LENGTH_LONG).show();				 
+			        actionsLights(false);
+			      }
+			    };
 		
+		    
 		
 		    /* hide buttons*/
 		    
@@ -104,7 +117,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		        
 		    button2 = (Button) findViewById(R.id.button2);
 		    button2.setVisibility(View.INVISIBLE);
-		    button2.setOnClickListener(listener2);		    
+		    button2.setOnClickListener(listener2);
+		    
+		    button3 = (Button) findViewById(R.id.button3);
+		    button3.setVisibility(View.INVISIBLE);
+		    button3.setOnClickListener(listener3);	
 		  
 			speakButton = (Button) findViewById(R.id.btn_speak);
 			speakButton.setVisibility(View.INVISIBLE);
@@ -180,12 +197,23 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		String apiURL;
 		
 		if (switched)
-			apiURL = "http://172.20.10.190:8281/test/piweek/lights";
+			apiURL = "http://192.168.1.11:8888/commands/light/on";
 		else
-			apiURL = "http://172.20.10.190:8281/test/piweek/lights";
+			apiURL = "http://192.168.1.11:8888/commands/light/off";
 		
 		new CallAPI().execute(apiURL);		
 	}
+	
+	
+public void actionsUnknow(){
+		
+		//String apiURL = "http://172.20.10.190:8281/test/piweek/lights";
+		//http://192.168.1.28:8888/commands/light
+		String apiURL = "http://192.168.1.11:8888/commands/unknow";
+		
+		new CallAPI().execute(apiURL);		
+	}
+	
 	
 	public void actionsTemperature(){
 		
@@ -214,6 +242,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 
 		public void onClick(View v) {
 		    // TODO Auto-generated method stub
+			mList.setVisibility(View.VISIBLE);
 		    startVoiceRecognitionActivity();
 		}
 
@@ -243,24 +272,27 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		        	actionsLights();
 		        } */
 		        
+		        mList.setBackgroundColor(Color.parseColor("#00cc00"));
+		        
+		        
 		        if (matches.contains("temperature")) {
 		        	Toast.makeText(getBaseContext(), "HEATER SWITCHED ON!", Toast.LENGTH_LONG).show();
 		        	actionsTemperature();
 		        }
 		        
-		        else if (matches.contains("lights on")) {
-		        	Toast.makeText(getBaseContext(), "ON (lights) Detected!", Toast.LENGTH_LONG).show();
+		        else if (matches.contains("light on")) {
+		        	Toast.makeText(getBaseContext(), "ON (light) Detected!", Toast.LENGTH_LONG).show();
 		        	actionsLights(true);
 		        }
 		        
-		        else if (matches.contains("lights off")) {
-		        	Toast.makeText(getBaseContext(), "OFF (lights) Detected!", Toast.LENGTH_LONG).show();
+		        else if (matches.contains("light off")) {
+		        	Toast.makeText(getBaseContext(), "OFF (light) Detected!", Toast.LENGTH_LONG).show();
 		        	actionsLights(false);
 		        }
 		        
 		        else {
-		        	Toast.makeText(getBaseContext(), "Do you mean Lights ON, don't you? ;)", Toast.LENGTH_LONG).show();
-		        	actionsLights(true);		        	
+		        	Toast.makeText(getBaseContext(), "Sorry I can not understand you!", Toast.LENGTH_LONG).show();
+		        	actionsUnknow();		        	
 		        }
 		        	
 		        
@@ -309,12 +341,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 				
 				tview.setVisibility(View.VISIBLE);				
 				button2.setVisibility(View.INVISIBLE);
+				button3.setVisibility(View.INVISIBLE);
 				speakButton.setVisibility(View.INVISIBLE);
 			}
 			else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2){
 				
 				tview.setVisibility(View.INVISIBLE);				
 				button2.setVisibility(View.VISIBLE);
+				button3.setVisibility(View.VISIBLE);
 				speakButton.setVisibility(View.INVISIBLE);
 				
 			}
@@ -322,6 +356,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 			else{
 				tview.setVisibility(View.INVISIBLE);				
 				button2.setVisibility(View.INVISIBLE);
+				button3.setVisibility(View.INVISIBLE);
 				speakButton.setVisibility(View.VISIBLE);
 				
 			}
@@ -336,6 +371,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 	//private class
 	
 	public class CallAPI extends AsyncTask<String, String, String> {
+		
+		private String room;
 
 		@Override
 		 protected String doInBackground(String... params) {
@@ -369,6 +406,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		           JSONObject json = new JSONObject(resultfi);
 		           
 		           String name = json.get("name").toString();
+		           room = name;
 		           String age = json.get("age").toString();
 		           
 		 
@@ -386,7 +424,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		
 		protected void onPostExecute(String result) {
 			
-			Toast.makeText(getBaseContext(), "END API call!", Toast.LENGTH_LONG).show();        	
+			Toast.makeText(getBaseContext(), "Command executed at room ["+room+"]", Toast.LENGTH_LONG).show();   
+			try {
+				Thread.sleep(7000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        mList.setVisibility(View.INVISIBLE);
 	        
 	   }
 		
