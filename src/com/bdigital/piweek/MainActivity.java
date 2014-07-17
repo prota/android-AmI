@@ -36,17 +36,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 	
 	
 	/*main Activity vars*/
-	OnClickListener listener1 = null;
-	OnClickListener listener2 = null;	
-	OnClickListener listener3 = null;
+	public OnClickListener listener1 = null;
+	public OnClickListener listener2 = null;	
+	public OnClickListener listener3 = null;
 	
 	TextView tvIsConnected;
-	static Button button2;
-	static Button button3;
-	static TextView tview;
+	public static Button button2;
+	public static Button button3;
+	public static TextView tview;
 		 
 	/* voice vars */
-	public  ListView mList;
+	public ListView mList;
 	public static Button speakButton;
 	public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
 		
@@ -63,10 +63,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		setContentView(R.layout.activity_main);
 
 		// get reference to the views		
-		tvIsConnected = (TextView) findViewById(R.id.tvIsConnected);
+		tvIsConnected = (TextView) findViewById(R.id.tvIsConnected);		
 		
-		
-		// check if you are connected or not
+		// check connection network
 		if(isConnected()){
 			tvIsConnected.setBackgroundColor(0xFF00CC00);
 			tvIsConnected.setText("You are connected");
@@ -74,8 +73,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		else{
 			tvIsConnected.setText("You are NOT connected");
 		}
-		
-		
+				
 		// Set up the action bar to show a dropdown list.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
@@ -90,7 +88,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 								getString(R.string.title_section1),
 								getString(R.string.title_section2),
 								getString(R.string.title_section3), }), this);
-				
+		
 		
 		    listener2 = new OnClickListener() {
 		      public void onClick(View v) {		        
@@ -106,9 +104,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 			        Toast.makeText(getApplicationContext(),"Calling Ami API...", Toast.LENGTH_LONG).show();				 
 			        actionsLights(false);
 			      }
-			    };
-		
-		    
+			    };				    
 		
 		    /* hide buttons*/
 		    
@@ -130,13 +126,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 			voiceinputbuttons();		
 	}
 	
-	protected void onPostExecute(String result) {
-		
-		Toast.makeText(getBaseContext(), "END API call!", Toast.LENGTH_LONG).show();        	
-        
+	protected void onPostExecute(String result) {		
+		Toast.makeText(getBaseContext(), "END API call!", Toast.LENGTH_LONG).show();           
    }
-	
-	
 
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -187,13 +179,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 	    	    	return true;
 	    	    else
 	    	    	return false;	
-	    }
-		
+	    }		
 
-	public void actionsLights(boolean switched){
-		
-		//String apiURL = "http://172.20.10.190:8281/test/piweek/lights";
-		//http://192.168.1.28:8888/commands/light
+	public void actionsLights(boolean switched){		
 		String apiURL;
 		
 		if (switched)
@@ -205,27 +193,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 	}
 	
 	
-public void actionsUnknow(){
-		
-		//String apiURL = "http://172.20.10.190:8281/test/piweek/lights";
-		//http://192.168.1.28:8888/commands/light
-		String apiURL = "http://192.168.1.11:8888/commands/unknow";
-		
+	public void actionsUnknow(){		
+		String apiURL = "http://192.168.1.11:8888/commands/unknow";		
 		new CallAPI().execute(apiURL);		
-	}
+	}	
 	
-	
-	public void actionsTemperature(){
-		
+	public void actionsTemperature(){		
 		String apiURL = "http://172.20.10.190:8281/test/piweek/temperature";
 		new CallAPI().execute(apiURL);		
 	}
 	
-	//voice
-		public void informationMenu() {
-		    startActivity(new Intent("android.intent.action.INFOSCREEN"));
-		}
-
+	//voice	
 		public void voiceinputbuttons() {
 		    speakButton = (Button) findViewById(R.id.btn_speak);
 		    mList = (ListView) findViewById(R.id.list);
@@ -295,16 +273,13 @@ public void actionsUnknow(){
 		        	actionsUnknow();		        	
 		        }
 		        	
-		        
-		        
+		        		        
 		        super.onActivityResult(requestCode, resultCode, data);
 		    }
-		}
-		
+		}		
 		
 		//fi voice
-	
-	
+		
 
 	/**
 	 * A dummy fragment representing a section of the app, but that simply
@@ -319,8 +294,7 @@ public void actionsUnknow(){
 
 		public DummySectionFragment() {
 			
-			System.out.println("#################### Dummy Section####################");
-			
+			System.out.println("#################### Dummy Section####################");			
 		}
 
 		@Override
@@ -331,12 +305,8 @@ public void actionsUnknow(){
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
 			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
-			
-			System.out.println("#################### Actionnnnn ????? ####################");
-			
-			
-			
+					ARG_SECTION_NUMBER)));			
+						
 			if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
 				
 				tview.setVisibility(View.VISIBLE);				
@@ -349,8 +319,7 @@ public void actionsUnknow(){
 				tview.setVisibility(View.INVISIBLE);				
 				button2.setVisibility(View.VISIBLE);
 				button3.setVisibility(View.VISIBLE);
-				speakButton.setVisibility(View.INVISIBLE);
-				
+				speakButton.setVisibility(View.INVISIBLE);				
 			}
 							
 			else{
@@ -360,13 +329,10 @@ public void actionsUnknow(){
 				speakButton.setVisibility(View.VISIBLE);
 				
 			}
-				
-						
+							
 			return rootView;
 		}
-	}
-	
-	
+	}		
 	
 	//private class
 	
@@ -398,10 +364,7 @@ public void actionsUnknow(){
 					
 				} catch (Exception e) {
 					// TODO: handle exception
-				}
-		           
-		           
-		           
+				}		           
 		           
 		           JSONObject json = new JSONObject(resultfi);
 		           
@@ -410,20 +373,16 @@ public void actionsUnknow(){
 		           String age = json.get("age").toString();
 		           
 		 
-		        } catch (Exception e ) {
-		 
-		           System.out.println(e.getMessage());
-		 
-		           return e.getMessage();
-		 
+		        } catch (Exception e ) {		        		 
+		           System.out.println(e.getMessage());		 
+		           return e.getMessage();		 
 		        }    
 		 
 		        return resultToDisplay;      
 		     }
 
 		
-		protected void onPostExecute(String result) {
-			
+		protected void onPostExecute(String result) {			
 			Toast.makeText(getBaseContext(), "Command executed at room ["+room+"]", Toast.LENGTH_LONG).show();   
 			try {
 				Thread.sleep(7000);
@@ -431,8 +390,7 @@ public void actionsUnknow(){
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	        mList.setVisibility(View.INVISIBLE);
-	        
+	        mList.setVisibility(View.INVISIBLE);	        
 	   }
 		
 	    private String convertInputStreamToString(InputStream inputStream) throws IOException{
@@ -444,7 +402,6 @@ public void actionsUnknow(){
 
 	        inputStream.close();
 	        return result;
-
 	    }		
 	}	
 	//fi private class	
