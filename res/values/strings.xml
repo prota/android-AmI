@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PiWeekBDG</string>
+    <string name="action_settings">About BDigital</string>
+    <string name="title_section1">Menu</string>
+    <string name="title_section2">AmI API</string>
+    <string name="title_section3">Voice Recognition</string>
+
+</resources>

@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D8D8D8"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+       <TextView
+        android:id="@+id/tvIsConnected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"     
+        android:background="#FF0000"
+        android:textColor="#FFF"
+        android:textSize="18dp"
+        android:layout_marginBottom="5dp"
+        android:text="is connected? " />
+   
+    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" == Select one option =="
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+     <RelativeLayout
+         android:layout_width="208dp"
+         android:layout_height="42dp" >
+
+         <Button
+             android:id="@+id/btn_speak"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentLeft="true"
+             android:layout_alignParentTop="true"
+             android:text="Speech REC" />
+
+         <Button
+             android:id="@+id/button2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentTop="true"
+             android:text="Lights  ON" />
+
+     </RelativeLayout>
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >
+
+         <GridLayout
+             android:layout_width="wrap_content"
+             android:layout_height="349dp"
+             android:layout_weight="0.81"
+             android:columnCount="1" >
+
+             <ListView
+                 android:id="@+id/list"
+                 android:layout_width="127dp"
+                 android:layout_height="321dp"
+                 android:layout_column="0"
+                 android:layout_gravity="left|top"
+                 android:layout_row="0"
+                 android:layout_weight="1"
+                 android:drawSelectorOnTop="false" >
+             </ListView>
+
+             <ImageView
+                 android:id="@+id/imageView1"
+                 android:layout_width="238dp"
+                 android:layout_height="137dp"
+                 android:layout_column="0"
+                 android:layout_gravity="center"
+                 android:layout_row="0"
+                 android:src="@drawable/bdigitalogo" />
+
+         </GridLayout>
+
+     </LinearLayout>
+     
+        </LinearLayout>
