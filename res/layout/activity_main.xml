@@ -45,7 +45,7 @@
              android:layout_height="wrap_content"
              android:layout_alignParentTop="true"
              android:layout_centerHorizontal="true"
-             android:text="Lights  ON" />
+             android:text="Light  ON" />
 
          <Button
              android:id="@+id/button3"
@@ -53,7 +53,7 @@
              android:layout_height="wrap_content"
              android:layout_alignParentRight="true"
              android:layout_alignParentTop="true"
-             android:text="Lights  OFF" />
+             android:text="Light  OFF" />
 
      </RelativeLayout>
 

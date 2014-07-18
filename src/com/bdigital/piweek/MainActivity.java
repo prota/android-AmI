@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
+
 import org.json.JSONObject;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -93,7 +95,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		    listener2 = new OnClickListener() {
 		      public void onClick(View v) {		        
 		        
-		        Toast.makeText(getApplicationContext(),"Calling Ami API...", Toast.LENGTH_LONG).show();				 
+		        Toast.makeText(getApplicationContext(),"Calling Ami API...", Toast.LENGTH_SHORT).show();				 
 		        actionsLights(true);
 		      }
 		    };
@@ -101,7 +103,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		    listener3 = new OnClickListener() {
 			      public void onClick(View v) {		        
 			        
-			        Toast.makeText(getApplicationContext(),"Calling Ami API...", Toast.LENGTH_LONG).show();				 
+			        Toast.makeText(getApplicationContext(),"Calling Ami API...", Toast.LENGTH_SHORT).show();				 
 			        actionsLights(false);
 			      }
 			    };				    
@@ -127,7 +129,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 	}
 	
 	protected void onPostExecute(String result) {		
-		Toast.makeText(getBaseContext(), "END API call!", Toast.LENGTH_LONG).show();           
+		Toast.makeText(getBaseContext(), "END API call!", Toast.LENGTH_SHORT).show();           
    }
 
 	@Override
@@ -211,10 +213,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 
 		public void startVoiceRecognitionActivity() {
 		    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-		    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-		        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-		    intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
-		        "Speech recognition demo");
+		    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+		    
+		    //intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ITALIAN);
+		    
+		    intent.putExtra(RecognizerIntent.EXTRA_PROMPT,  "Speech recognition demo");
 		    startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
 		}
 
@@ -254,22 +257,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		        
 		        
 		        if (matches.contains("temperature")) {
-		        	Toast.makeText(getBaseContext(), "HEATER SWITCHED ON!", Toast.LENGTH_LONG).show();
+		        	Toast.makeText(getBaseContext(), "HEATER SWITCHED ON!", Toast.LENGTH_SHORT).show();
 		        	actionsTemperature();
 		        }
 		        
 		        else if (matches.contains("light on")) {
-		        	Toast.makeText(getBaseContext(), "ON (light) Detected!", Toast.LENGTH_LONG).show();
+		        	Toast.makeText(getBaseContext(), "ON (light) Detected!", Toast.LENGTH_SHORT).show();
 		        	actionsLights(true);
 		        }
 		        
 		        else if (matches.contains("light off")) {
-		        	Toast.makeText(getBaseContext(), "OFF (light) Detected!", Toast.LENGTH_LONG).show();
+		        	Toast.makeText(getBaseContext(), "OFF (light) Detected!", Toast.LENGTH_SHORT).show();
 		        	actionsLights(false);
 		        }
 		        
 		        else {
-		        	Toast.makeText(getBaseContext(), "Sorry I can not understand you!", Toast.LENGTH_LONG).show();
+		        	Toast.makeText(getBaseContext(), "Sorry I can not understand you!", Toast.LENGTH_SHORT).show();
 		        	actionsUnknow();		        	
 		        }
 		        	
@@ -383,14 +386,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 
 		
 		protected void onPostExecute(String result) {			
-			Toast.makeText(getBaseContext(), "Command executed at room ["+room+"]", Toast.LENGTH_LONG).show();   
+			Toast.makeText(getBaseContext(), "Command executed at room ["+room+"]", Toast.LENGTH_SHORT).show();
+			System.out.println("############## Room is: "+room);
+			
 			try {
-				Thread.sleep(7000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	        mList.setVisibility(View.INVISIBLE);	        
+			
+	        
+			mList.setVisibility(View.INVISIBLE);	        
 	   }
 		
 	    private String convertInputStreamToString(InputStream inputStream) throws IOException{
