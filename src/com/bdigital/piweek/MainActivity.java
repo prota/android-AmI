@@ -8,8 +8,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Locale;
-
 import org.json.JSONObject;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -36,6 +34,8 @@ import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener, OnClickListener {
 	
+	/*Dev/Prod vars urls*/	
+	public String SERVER_URL = "http://192.168.1.11";    
 	
 	/*main Activity vars*/
 	public OnClickListener listener1 = null;
@@ -89,8 +89,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 						android.R.id.text1, new String[] {
 								getString(R.string.title_section1),
 								getString(R.string.title_section2),
-								getString(R.string.title_section3), }), this);
-		
+								getString(R.string.title_section3), }), this);		
 		
 		    listener2 = new OnClickListener() {
 		      public void onClick(View v) {		        
@@ -187,21 +186,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		String apiURL;
 		
 		if (switched)
-			apiURL = "http://192.168.1.11:8888/commands/light/on";
+			apiURL = SERVER_URL + ":8888/commands/light/on";
 		else
-			apiURL = "http://192.168.1.11:8888/commands/light/off";
+			apiURL = SERVER_URL + ":8888/commands/light/off";
 		
 		new CallAPI().execute(apiURL);		
 	}
 	
 	
 	public void actionsUnknow(){		
-		String apiURL = "http://192.168.1.11:8888/commands/unknow";		
+		String apiURL = SERVER_URL + ":8888/commands/unknow";		
 		new CallAPI().execute(apiURL);		
 	}	
 	
 	public void actionsTemperature(){		
-		String apiURL = "http://172.20.10.190:8281/test/piweek/temperature";
+		String apiURL = SERVER_URL + ":8888/commands/temperature";
 		new CallAPI().execute(apiURL);		
 	}
 	
