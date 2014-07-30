@@ -35,7 +35,7 @@ import android.widget.Toast;
 public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener, OnClickListener {
 	
 	/*Dev/Prod vars urls*/	
-	public String SERVER_URL = "http://192.168.1.11";    
+	public String SERVER_URL = "http://192.168.1.14";    
 	
 	/*main Activity vars*/
 	public OnClickListener listener1 = null;
